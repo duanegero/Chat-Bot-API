@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  getAllRiddlesCount,
+  getAllRiddlesIds,
   getRandomRiddle,
 } = require("../helper functions/getHelper");
 
@@ -13,17 +13,17 @@ const { updateRiddle } = require("../helper functions/putHelper");
 router.get("/random", async (req, res) => {
   try {
     //variable to handle call to helper function
-    totalRiddles = await getAllRiddlesCount();
+    const allRiddlesIds = await getAllRiddlesIds();
 
     //if nothing found in database return error status and message
-    if (totalRiddles === 0) {
+    if (allRiddlesIds.length === 0) {
       return res.status(404).json({
-        message: "No riddle found in the database",
+        message: "No riddles found in the database",
       });
     }
 
-    //variable used to select random number
-    const randomId = Math.floor(Math.random() * totalRiddles) + 1;
+    const randomIndex = Math.floor(Math.random() * allRiddlesIds.length);
+    const randomId = allRiddlesIds[randomIndex].riddle_id;
 
     //variable to handle helper function call with passed in variable
     const randomRiddle = await getRandomRiddle(randomId);

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  getAllJokesCount,
+  getAllJokesIds,
   getRandomJoke,
 } = require("../helper functions/getHelper");
 
@@ -13,17 +13,18 @@ const { updateJoke } = require("../helper functions/putHelper");
 router.get("/random", async (req, res) => {
   try {
     //variable to handle helper function to get count of jokes
-    totalJokes = await getAllJokesCount();
+    allJokeIds = await getAllJokesIds();
 
     //if nothing returned return error status 404
-    if (totalJokes === 0) {
+    if (getAllJokesIds.length === 0) {
       return res.status(404).json({
         message: "No jokes found in the database.",
       });
     }
 
-    //variable to handle getting a random number
-    const randomId = Math.floor(Math.random() * totalJokes) + 1;
+    // Randomly select a joke_id from the list of joke IDs
+    const randomIndex = Math.floor(Math.random() * allJokeIds.length);
+    const randomId = allJokeIds[randomIndex].joke_id;
 
     //variable to handle helper function with passed in variable
     const randomJoke = await getRandomJoke(randomId);

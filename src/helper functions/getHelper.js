@@ -2,15 +2,17 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const getAllJokesCount = async () => {
+const getAllJokesIds = async () => {
   try {
     //variable to handle prisma query
-    const allJokes = await prisma.jokes.count();
+    const allJokesIds = await prisma.jokes.findMany({
+      select: { joke_id: true },
+    });
     //return results
-    return allJokes;
+    return allJokesIds;
   } catch (error) {
     //catch if any errors
-    console.error("Error fetching joke count.", error);
+    console.error("Error fetching joke IDs.", error);
   } finally {
     //disconnect when done
     await prisma.$disconnect();
@@ -36,6 +38,7 @@ const getRandomJoke = async (randomId) => {
     //if nothing returned log
     if (!randomJoke) {
       console.log("No joke found.");
+      return null;
     }
 
     //return joke to use in app
@@ -47,15 +50,17 @@ const getRandomJoke = async (randomId) => {
   }
 };
 
-const getAllRiddlesCount = async () => {
+const getAllRiddlesIds = async () => {
   try {
     //variable to handle prisma query
-    const allRiddles = await prisma.riddles.count();
+    const allRiddlesIds = await prisma.riddles.findMany({
+      select: { riddle_id: true },
+    });
     //return results
-    return allRiddles;
+    return allRiddlesIds;
   } catch (error) {
     //catch if any errors
-    console.error("Error fetching riddle count.", error);
+    console.error("Error fetching riddle Ids.", error);
   } finally {
     //disconnect when done
     await prisma.$disconnect();
@@ -93,8 +98,8 @@ const getRandomRiddle = async (randomId) => {
 };
 
 module.exports = {
-  getAllJokesCount,
+  getAllJokesIds,
   getRandomJoke,
-  getAllRiddlesCount,
+  getAllRiddlesIds,
   getRandomRiddle,
 };
