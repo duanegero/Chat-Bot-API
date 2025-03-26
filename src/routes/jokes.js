@@ -16,7 +16,7 @@ router.get("/random", async (req, res) => {
     allJokeIds = await getAllJokesIds();
 
     //if nothing returned return error status 404
-    if (getAllJokesIds.length === 0) {
+    if (allJokeIds.length === 0) {
       return res.status(404).json({
         message: "No jokes found in the database.",
       });
