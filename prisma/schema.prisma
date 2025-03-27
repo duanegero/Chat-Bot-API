@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
     provider = "postgresql"
-    url      = "postgresql://duane:password@localhost:5432/chat-bot"
+    url      = "postgresql://duane:password@db:5432/ChatBot-DB"
 }
 
 model jokes {

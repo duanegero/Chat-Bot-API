@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: ChatBot-DB
+    restart: always
+    environment:
+      - POSTGRES_USER=duane
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=ChatBot-DB
+    ports:
+      - "5432:5432"
+    volumes:
+      - chatbot_data:/var/lib/postgresql/data
+    networks:
+      - ChatBot-Network
+
+  api:
+    build: .
+    container_name: ChatBot-API
+    image: chat-bot-api
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://duane:password@db:5432/ChatBot-DB
+      - PORT=3011
+    ports:
+      - "3011:3011"
+    depends_on:
+      - db
+    networks:
+      - ChatBot-Network
+
+volumes:
+  chatbot_data:
+
+networks:
+  ChatBot-Network:
