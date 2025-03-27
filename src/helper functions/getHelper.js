@@ -2,6 +2,21 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+const getAllJokesDetails = async () => {
+  try {
+    const allJokeDetails = await prisma.jokes.findMany({
+      select: {
+        joke: true,
+      },
+    });
+    return allJokeDetails;
+  } catch (error) {
+    //catch and log any errors
+    console.error("Error fetching jokes:", error);
+    throw error;
+  }
+};
+
 const getAllJokesIds = async () => {
   try {
     //variable to handle prisma query
@@ -102,4 +117,5 @@ module.exports = {
   getRandomJoke,
   getAllRiddlesIds,
   getRandomRiddle,
+  getAllJokesDetails,
 };

@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   getAllJokesIds,
   getRandomJoke,
+  getAllJokesDetails,
 } = require("../helper functions/getHelper");
 
 const { postNewJoke } = require("../helper functions/postHelper");
@@ -9,6 +10,16 @@ const { postNewJoke } = require("../helper functions/postHelper");
 const { deleteJoke } = require("../helper functions/deleteHelper");
 
 const { updateJoke } = require("../helper functions/putHelper");
+
+router.get("/", async (req, res) => {
+  try {
+    const allJokesDetails = await getAllJokesDetails();
+
+    res.status(200).json(allJokesDetails);
+  } catch (error) {
+    console.error("Error fetching all jokes", error.message, error.stack);
+  }
+});
 
 router.get("/random", async (req, res) => {
   try {
