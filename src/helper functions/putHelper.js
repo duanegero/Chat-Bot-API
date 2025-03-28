@@ -76,4 +76,35 @@ const updateRiddle = async (riddleId, riddleToUpdate) => {
   }
 };
 
-module.exports = { updateJoke, updateRiddle };
+const updateFact = async (factId, factToUpdate) => {
+  const factIdInt = parseInt(factId);
+
+  try {
+    const findFact = await prisma.facts.findUnique({
+      where: { fact_id: factIdInt },
+    });
+
+    if (!findFact) {
+      throw new Error(`Fact ID ${factIdInt} not found.`);
+    }
+
+    const updatedFact = await prisma.facts.update({
+      where: { fact_id: factIdInt },
+      data: {
+        fact: factToUpdate,
+      },
+    });
+
+    if (!updatedFact) {
+      return { error: "Error updating fact." };
+    }
+
+    return { message: "Updated fact.", updatedFact };
+  } catch (error) {
+    //catch and log any error
+    console.error("Error updating fact.", error.message);
+    return { error: "An error occurred while updating fact." };
+  }
+};
+
+module.exports = { updateJoke, updateRiddle, updateFact };

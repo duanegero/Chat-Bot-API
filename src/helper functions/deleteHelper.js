@@ -27,7 +27,7 @@ const deleteJoke = async (jokeId) => {
   const jokeIdInt = parseInt(jokeId);
 
   //variable to handle prisma query
-  const jokeToDelete = prisma.jokes.findUnique({
+  const jokeToDelete = await prisma.jokes.findUnique({
     where: { joke_id: jokeIdInt },
   });
 
@@ -42,7 +42,28 @@ const deleteJoke = async (jokeId) => {
   });
 };
 
+const deleteFact = async (factId) => {
+  //varible to make id into an int
+  const factIdInt = parseInt(factId);
+
+  //variable to handle prisma query
+  const factToDelete = await prisma.facts.findUnique({
+    where: { fact_id: factIdInt },
+  });
+
+  //if nothing returned throw new error
+  if (!factToDelete) {
+    throw new Error("No fact found.");
+  }
+
+  //prisma query to delete fact
+  await prisma.facts.delete({
+    where: { fact_id: factIdInt },
+  });
+};
+
 module.exports = {
   deleteRiddle,
   deleteJoke,
+  deleteFact,
 };

@@ -44,5 +44,22 @@ const postNewJoke = async (jokeToAdd) => {
   }
 };
 
+const postNewFact = async (factToAdd) => {
+  try {
+    const newFact = await prisma.facts.create({
+      data: {
+        fact: factToAdd,
+      },
+    });
+
+    console.log("New fact added:", newFact);
+    return { message: "New fact added", newFact };
+  } catch (error) {
+    //catch and log if any errors
+    console.error("Error creating new fact:", error);
+    throw new Error("An error occurred while creating new fact.");
+  }
+};
+
 //export functions to use else where
-module.exports = { postNewRiddle, postNewJoke };
+module.exports = { postNewRiddle, postNewJoke, postNewFact };

@@ -17,14 +17,14 @@ router.get("/", async (req, res) => {
 
     res.status(200).json(allJokesDetails);
   } catch (error) {
-    console.error("Error fetching all jokes", error.message, error.stack);
+    console.error("Error fetching all jokes.", error.message, error.stack);
   }
 });
 
 router.get("/random", async (req, res) => {
   try {
     //variable to handle helper function to get count of jokes
-    allJokeIds = await getAllJokesIds();
+    const allJokeIds = await getAllJokesIds();
 
     //if nothing returned return error status 404
     if (allJokeIds.length === 0) {
@@ -64,7 +64,7 @@ router.post("/", async (req, res) => {
 
   //if nothing in the body return error status and json
   if (!jokeToAdd) {
-    return res.status(400).json({ message: "No joke passed." });
+    return res.status(400).json({ message: "No joke passed in body." });
   }
 
   try {
@@ -108,7 +108,7 @@ router.delete("/:id", async (req, res) => {
 
     //return success status and json
     res.status(200).json({
-      message: "Joke deleted successfully",
+      message: "Joke deleted successfully.",
       deletedJoke,
     });
   } catch (error) {
@@ -127,7 +127,7 @@ router.put("/:id", async (req, res) => {
   //if no ID or updated joke return error status and json
   if (!jokeId || !jokeToUpdate) {
     return res.status(400).json({
-      message: "Joke Id or Updated joke missing",
+      message: "Joke ID or Updated joke missing",
     });
   }
 

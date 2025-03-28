@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
     provider = "postgresql"
-    url      = "postgresql://duane:password@db:5432/ChatBot-DB"
+    url      = "postgresql://duane:password@localhost:5432/chat-bot"
 }
 
 model jokes {
@@ -17,6 +17,13 @@ model jokes {
 model riddles {
     riddle_id  Int       @id @default(autoincrement())
     riddle     String    @db.Text
+    created_at DateTime? @default(now()) @db.Timestamp(6)
+    updated_at DateTime? @updatedAt @db.Timestamp(6)
+}
+
+model facts {
+    fact_id    Int       @id @default(autoincrement())
+    fact       String    @db.Text
     created_at DateTime? @default(now()) @db.Timestamp(6)
     updated_at DateTime? @updatedAt @db.Timestamp(6)
 }

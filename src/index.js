@@ -8,6 +8,7 @@ const PORT = 3011;
 
 const jokesRoute = require("./routes/jokes");
 const riddleRoute = require("./routes/riddles");
+const factsRoute = require("./routes/facts");
 
 //middleware to parse json
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use(cors());
 
 app.use("/jokes", jokesRoute);
 app.use("/riddles", riddleRoute);
+app.use("/facts", factsRoute);
 
 app.get("/", (req, res) => {
   res.send("Louy Chat Bot");

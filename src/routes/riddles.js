@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   getAllRiddlesIds,
   getRandomRiddle,
+  getAllRiddleDetails,
 } = require("../helper functions/getHelper");
 
 const { postNewRiddle } = require("../helper functions/postHelper");
@@ -9,6 +10,16 @@ const { postNewRiddle } = require("../helper functions/postHelper");
 const { deleteRiddle } = require("../helper functions/deleteHelper");
 
 const { updateRiddle } = require("../helper functions/putHelper");
+
+router.get("/", async (req, res) => {
+  try {
+    const allRiddleDetails = await getAllRiddleDetails();
+
+    res.status(200).json(allRiddleDetails);
+  } catch (error) {
+    console.error("Error fetching all riddles.", error.message, error.stack);
+  }
+});
 
 router.get("/random", async (req, res) => {
   try {
