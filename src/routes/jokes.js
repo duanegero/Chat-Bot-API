@@ -13,10 +13,13 @@ const { updateJoke } = require("../helper functions/putHelper");
 
 router.get("/", async (req, res) => {
   try {
+    //variable to handle call to helper function
     const allJokesDetails = await getAllJokesDetails();
 
+    //respond with ok status and json
     res.status(200).json(allJokesDetails);
   } catch (error) {
+    //catch and log if any errors
     console.error("Error fetching all jokes.", error.message, error.stack);
   }
 });
@@ -76,7 +79,7 @@ router.post("/", async (req, res) => {
       return res.status(500).json({ message: "Failed to add new Joke." });
     }
 
-    //id error return the error
+    //if error return the error
     if (newJoke.error) {
       return res.status(400).json({ error: newJoke.error });
     }

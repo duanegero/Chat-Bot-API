@@ -46,13 +46,17 @@ const postNewJoke = async (jokeToAdd) => {
 
 const postNewFact = async (factToAdd) => {
   try {
+    //variable to handle prisma query
     const newFact = await prisma.facts.create({
       data: {
         fact: factToAdd,
       },
     });
 
+    //log for testing
     console.log("New fact added:", newFact);
+
+    //return message to user
     return { message: "New fact added", newFact };
   } catch (error) {
     //catch and log if any errors

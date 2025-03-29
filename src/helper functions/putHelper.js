@@ -77,17 +77,21 @@ const updateRiddle = async (riddleId, riddleToUpdate) => {
 };
 
 const updateFact = async (factId, factToUpdate) => {
+  //variable to make ID into an Int
   const factIdInt = parseInt(factId);
 
   try {
+    //variable to handle prisma query
     const findFact = await prisma.facts.findUnique({
       where: { fact_id: factIdInt },
     });
 
+    //if no fact returned throw error
     if (!findFact) {
       throw new Error(`Fact ID ${factIdInt} not found.`);
     }
 
+    //variable to handle prisma query
     const updatedFact = await prisma.facts.update({
       where: { fact_id: factIdInt },
       data: {
@@ -95,10 +99,12 @@ const updateFact = async (factId, factToUpdate) => {
       },
     });
 
+    //if nothing returned return error
     if (!updatedFact) {
       return { error: "Error updating fact." };
     }
 
+    //return message with update
     return { message: "Updated fact.", updatedFact };
   } catch (error) {
     //catch and log any error

@@ -86,7 +86,7 @@ const getAllRiddleDetails = async () => {
     if (!allRiddleDetails) {
       return { message: "No riddles found in database." };
     }
-
+    //return details to users
     return allRiddleDetails;
   } catch (error) {
     //catch and log any errors
@@ -144,6 +144,7 @@ const getRandomRiddle = async (randomId) => {
 
 const getAllFactsDetails = async () => {
   try {
+    //variable to handle prisma query
     const allFactsDetails = await prisma.facts.findMany({
       select: {
         fact: true,
@@ -166,10 +167,12 @@ const getAllFactsDetails = async () => {
 
 const getAllFactIds = async () => {
   try {
+    //variable to handle prisma query
     const allFactIds = await prisma.facts.findMany({
       select: { fact_id: true },
     });
 
+    //return to use in app
     return allFactIds;
   } catch (error) {
     //catch if any errors
@@ -181,9 +184,11 @@ const getAllFactIds = async () => {
 };
 
 const getRandomFact = async (randomId) => {
+  //varaible to make ID into an Int
   const randomIdInt = parseInt(randomId, 10);
 
   try {
+    //variable to handle prisma query
     const randomFact = await prisma.facts.findUnique({
       where: {
         fact_id: randomIdInt,
@@ -193,9 +198,12 @@ const getRandomFact = async (randomId) => {
       },
     });
 
+    //if nothing returned log to user
     if (!randomFact) {
       console.log("No fact found.");
     }
+
+    //return result to use in app
     return randomFact;
   } catch (error) {
     //catch and log any errors if found

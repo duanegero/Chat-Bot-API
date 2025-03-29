@@ -13,10 +13,13 @@ const { updateRiddle } = require("../helper functions/putHelper");
 
 router.get("/", async (req, res) => {
   try {
+    //variable to handle call to helper function
     const allRiddleDetails = await getAllRiddleDetails();
 
+    //respond with ok status and json
     res.status(200).json(allRiddleDetails);
   } catch (error) {
+    //catch and log if any errors
     console.error("Error fetching all riddles.", error.message, error.stack);
   }
 });
@@ -33,6 +36,7 @@ router.get("/random", async (req, res) => {
       });
     }
 
+    // Randomly select a riddle_id from the list of riddle IDs
     const randomIndex = Math.floor(Math.random() * allRiddlesIds.length);
     const randomId = allRiddlesIds[randomIndex].riddle_id;
 
