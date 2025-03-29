@@ -26,6 +26,7 @@ router.get("/", async (req, res) => {
 
 router.get("/random", async (req, res) => {
   try {
+    //test
     //variable to handle helper function to get count of jokes
     const allJokeIds = await getAllJokesIds();
 
